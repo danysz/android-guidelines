@@ -9,7 +9,7 @@ New projects should follow the Android Gradle project structure that is defined 
 ### 1.2.1 Class files
 Class names are written in [UpperCamelCase](http://en.wikipedia.org/wiki/CamelCase).
 
-For classes that extend an Android component, the name of the class should end with the name of the component; for example: `SignInActivity`, `SignInFragment`, `ImageUploaderService`, `ChangePasswordDialog`.
+For classes that extend an Android component, the name of the class should start with the name of the component; for example: `ActivitySignIn`, `FragmentSignIn`, `ServiceImageUploader`, `DialogChangePassword`.
 
 ### 1.2.2 Resources files
 
@@ -18,7 +18,7 @@ Resources file names are written in __lowercase_underscore__.
 #### 1.2.2.1 Drawable files
 
 Naming conventions for drawables:
-
+The name is build from `prefix` `_` some meaning name `_` state where is relevant
 
 | Asset Type   | Prefix            |		Example               |
 |--------------| ------------------|-----------------------------|
@@ -59,19 +59,20 @@ Layout files should match the name of the Android components that they are inten
 
 | Component        | Class Name             | Layout Name                   |
 | ---------------- | ---------------------- | ----------------------------- |
-| Activity         | `UserProfileActivity`  | `activity_user_profile.xml`   |
-| Fragment         | `SignUpFragment`       | `fragment_sign_up.xml`        |
-| Dialog           | `ChangePasswordDialog` | `dialog_change_password.xml`  |
+| Activity         | `ActivityUserProfile`  | `activity_user_profile.xml`   |
+| Fragment         | `FragmentSignUp`       | `fragment_sign_up.xml`        |
+| Dialog           | `DialogChangePassword` | `dialog_change_password.xml`  |
 | AdapterView item | ---                    | `item_person.xml`             |
 | Partial layout   | ---                    | `partial_stats_bar.xml`       |
+| Custom view      | `CustomEditText`       | `custom_edit_text.xml`       |
 
-A slightly different case is when we are creating a layout that is going to be inflated by an `Adapter`, e.g to populate a `ListView`. In this case, the name of the layout should start with `item_`.
+A slightly different case is when we are creating a layout that is going to be inflated by an `Adapter`, e.g to populate a `ListView`. In this case, the name of the layout should start with `item_` followed by the prefix of the target view `lv` (`grid`, `sv`, etc) and continued by the meaning name.
 
 Note that there are cases where these rules will not be possible to apply. For example, when creating layout files that are intended to be part of other layouts. In this case you should use the prefix `partial_`.
 
 #### 1.2.2.3 Menu files
 
-Similar to layout files, menu files should match the name of the component. For example, if we are defining a menu file that is going to be used in the `UserActivity`, then the name of the file should be `activity_user.xml`
+Similar to layout files, menu files should match the name of the component. For example, if we are defining a menu file that is going to be used in the `ActivityUser`, then the name of the file should be `activity_user.xml`
 
 A good practice is to not include the word `menu` as part of the name because these files are already located in the `menu` directory.
 
@@ -137,8 +138,8 @@ Fields should be defined at the __top of the file__ and they should follow the n
 
 * Private, non-static field names start with __m__.
 * Private, static field names start with __s__.
-* Other fields start with a lower case letter.
 * Static final fields (constants) are ALL_CAPS_WITH_UNDERSCORES.
+* Use always descriptor (private/public/protected)
 
 Example:
 
@@ -147,7 +148,6 @@ public class MyClass {
     public static final int SOME_CONSTANT = 42;
     public int publicField;
     private static MyClass sSingleton;
-    int mPackagePrivate;
     private int mPrivate;
     protected int mProtected;
 }
@@ -155,8 +155,8 @@ public class MyClass {
 
 ### 2.2.3 Treat acronyms as words
 
-| Good           | Bad            |
-| -------------- | -------------- |
+| Good             | Bad              |
+| ---------------- | ---------------- |
 | `XmlHttpRequest` | `XMLHTTPRequest` |
 | `getCustomerId`  | `getCustomerID`  |
 | `String url`     | `String URL`     |
@@ -199,10 +199,12 @@ class MyClass {
 
 Braces around the statements are required unless the condition and the body fit on one line.
 
-If the condition and the body fit on one line and that line is shorter than the max line length, then braces are not required, e.g.
+Use always braces for conditions if the body of the action is just one row e.g. Don't forget to put the braces.
 
 ```java
-if (condition) body();
+if (condition){
+    body();
+}
 ```
 
 This is __bad__:
@@ -279,7 +281,7 @@ Use the logging methods provided by the `Log` class to print out error messages 
 * `Log.w(String tag, String msg)` (warning)
 * `Log.e(String tag, String msg)` (error)
 
-As a general rule, we use the class name as tag and we define it as a `static final` field at the top of the file. For example:
+As a general rule, bad practice is to use the class name as tag and we define it as a `static final` field at the top of the file. It's bad because is using reflection and it's very slow. For example:
 
 ```java
 public class MyClass {
@@ -292,6 +294,8 @@ public class MyClass {
 ```
 
 VERBOSE and DEBUG logs __must__ be disabled on release builds. It is also recommended to disable INFORMATION, WARNING and ERROR logs but you may want to keep them enabled if you think they may be useful to identify issues on release builds. If you decide to leave them enabled, you have to make sure that they are not leaking private information such as email addresses, user ids, etc.
+
+Because of that is recommended to use a smarter Log class that extends the "original" and makes the configuration much more easier.
 
 To only show logs on debug builds:
 
@@ -309,7 +313,7 @@ There is no single correct solution for this but using a __logical__ and __consi
 4. Override methods and callbacks (public or private)
 5. Public methods
 6. Private methods
-7. Inner classes or interfaces
+7. Inner classes or interfaces - try to put them in their own classes.
 
 Example:
 
@@ -392,13 +396,18 @@ When using one of these components, you __must__ define the keys as a `static fi
 
 Note that the arguments of a Fragment - `Fragment.getArguments()` - are also a Bundle. However, because this is a quite common use of Bundles, we define a different prefix for them.
 
+Add at the begginig what is meaning. eg:
+KEY - for keys used in preferences, json files, etc
+DEF - for default values
+
+
 Example:
 
 ```java
 // Note the value of the field is the same as the name to avoid duplication issues
-static final String PREF_EMAIL = "PREF_EMAIL";
-static final String BUNDLE_AGE = "BUNDLE_AGE";
-static final String ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
+static final String KEY_PREF_EMAIL = "PREF_EMAIL";
+static final String KEY_BUNDLE_AGE = "BUNDLE_AGE";
+static final String KEY_ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
 
 // Intent-related items use full package name as value
 static final String EXTRA_SURNAME = "com.myapp.extras.EXTRA_SURNAME";
@@ -556,21 +565,23 @@ Resource IDs and names are written in __lowercase_underscore__.
 
 #### 2.3.2.1 ID naming
 
-IDs should be prefixed with the name of the element in lowercase underscore. For example:
-
+IDs should be prefixed with the name of the element in lowercase, followed by a short name of the "parent" and by the meaning name.The names shall be based on CamelCase. For example:
 
 | Element            | Prefix            |
 | -----------------  | ----------------- |
-| `TextView`           | `text_`             |
-| `ImageView`          | `image_`            |
-| `Button`             | `button_`           |
-| `Menu`               | `menu_`             |
+| `TextView`         | `text`            |
+| `ImageView`        | `image`           |
+| `Button`           | `button`          |
+| `Menu`             | `menu`            |
+| `EditText`         | `edit`            |
+
+If we are in `activity_login.xml` 
 
 Image view example:
 
 ```xml
 <ImageView
-    android:id="@+id/image_profile"
+    android:id="@+id/imageActLogProfile"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
 ```
@@ -580,7 +591,7 @@ Menu example:
 ```xml
 <menu>
 	<item
-        android:id="@+id/menu_done"
+        android:id="@+id/menuDone"
         android:title="Done" />
 </menu>
 ```
@@ -592,10 +603,10 @@ String names start with a prefix that identifies the section they belong to. For
 
 | Prefix             | Description                           |
 | -----------------  | --------------------------------------|
-| `error_`             | An error message                      |
-| `msg_`               | A regular information message         |
-| `title_`             | A title, i.e. a dialog title          |
-| `action_`            | An action such as "Save" or "Create"  |
+| `error_`           | An error message                      |
+| `msg_`             | A regular information message         |
+| `title_`           | A title, i.e. a dialog title          |
+| `action_`          | An action such as "Save" or "Create"  |
 
 
 
@@ -630,7 +641,7 @@ Sometimes a class may contain a large amount of methods, that at the same time r
 
 ### 2.4.2 Espresso tests
 
-Every Espresso test class usually targets an Activity, therefore the name should match the name of the targeted Activity followed by `Test`, e.g. `SignInActivityTest`
+Every Espresso test class usually targets an Activity, therefore the name should match the name of the targeted Activity prefixed by `Test`, e.g. `TestActivitySignIn`
 
 When using the Espresso API it is a common practice to place chained methods in new lines.
 
@@ -643,7 +654,7 @@ onView(withId(R.id.view))
 # License
 
 ```
-Copyright 2015 Ribot Ltd.
+Copyright 2016 Daniel Szasz Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
