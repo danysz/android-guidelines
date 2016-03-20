@@ -64,7 +64,7 @@ Layout files should match the name of the Android components that they are inten
 | Dialog           | `DialogChangePassword` | `dialog_change_password.xml`  |
 | AdapterView item | ---                    | `item_person.xml`             |
 | Partial layout   | ---                    | `partial_stats_bar.xml`       |
-| Custom view      | `CustomEditText`       | `custom_edit_text.xml`       |
+| Custom view      | `EditTextCustom`       | `edit_text_custom.xml`        |
 
 A slightly different case is when we are creating a layout that is going to be inflated by an `Adapter`, e.g to populate a `ListView`. In this case, the name of the layout should start with `item_` followed by the prefix of the target view `lv` (`grid`, `sv`, etc) and continued by the meaning name.
 
