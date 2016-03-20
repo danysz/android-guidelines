@@ -364,7 +364,29 @@ public class MainActivity extends Activity {
 }
 ```
 
-### 2.2.11 Parameter ordering in methods
+### 2.2.11 Object events
+When an event (listener) have to be added to an object (usual view, viewgroup) the code will not be added inside the event. 
+A new class will be created as a inner class and inside it will be just a call to the function that will do the work for real. The name of the new class is On<ViewName><EventName>
+
+```java
+    view.setOnClickListener(OnViewClick);
+
+    private class OnClickListener OnViewClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+           doSomething(); 
+        }
+    };
+
+    private void doSomething(){
+    	//actual work that have to be done...
+    }
+
+```
+
+
+
+### 2.2.12 Parameter ordering in methods
 
 When programming for Android, it is quite common to define methods that take a `Context`. If you are writing a method like this, then the __Context__ must be the __first__ parameter.
 
