@@ -8,7 +8,7 @@ List of guidelines that we use at [ribot](http://ribot.co.uk) when developing fo
 ### License
 
 ```
-Copyright 2015 Ribot Ltd.
+Copyright 2015 Daniel Szasz Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
