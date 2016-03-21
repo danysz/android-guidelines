@@ -2,7 +2,7 @@
 
 ## 1.1 Project structure
 
-New projects should follow the Android Gradle project structure that is defined on the [Android Gradle plugin user guide](http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Project-Structure). The [ribot Boilerplate](https://github.com/ribot/android-boilerplate) project is a good reference to start from.
+New projects should follow the Android Gradle project structure that is defined on the [Android Gradle plugin user guide](http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Project-Structure).
 
 ## 1.2 File naming
 
@@ -57,14 +57,15 @@ Naming conventions for selector states:
 
 Layout files should match the name of the Android components that they are intended for but moving the top level component name to the beginning. For example, if we are creating a layout for the `SignInActivity`, the name of the layout file should be `activity_sign_in.xml`.
 
-| Component        | Class Name             | Layout Name                   |
-| ---------------- | ---------------------- | ----------------------------- |
-| Activity         | `ActivityUserProfile`  | `activity_user_profile.xml`   |
-| Fragment         | `FragmentSignUp`       | `fragment_sign_up.xml`        |
-| Dialog           | `DialogChangePassword` | `dialog_change_password.xml`  |
-| AdapterView item | ---                    | `item_person.xml`             |
-| Partial layout   | ---                    | `partial_stats_bar.xml`       |
-| Custom view      | `EditTextCustom`       | `edit_text_custom.xml`        |
+| Component        | Class Name               | Layout Name                     |
+| ---------------- | ------------------------ | ------------------------------- |
+| Activity         | `ActivityUserProfile`    | `activity_user_profile.xml`     |
+| Fragment         | `FragmentSignUp`         | `fragment_sign_up.xml`          |
+| Dialog           | `DialogChangePassword`   | `dialog_change_password.xml`    |
+| AdapterView item | ---                      | `item_person.xml`               |
+| Partial layout   | ---                      | `partial_stats_bar.xml`         |
+| Custom view      | `EditTextCustom`         | `edit_text_custom.xml`          |
+| Custom layout    | `Custom<SignificantName>`| `custom_<significant_name>.xml` |
 
 A slightly different case is when we are creating a layout that is going to be inflated by an `Adapter`, e.g to populate a `ListView`. In this case, the name of the layout should start with `item_` followed by the prefix of the target view `lv` (`grid`, `sv`, etc) and continued by the meaning name.
 
