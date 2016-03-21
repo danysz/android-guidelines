@@ -2,7 +2,7 @@
 
 List of guidelines that we use at [IdeoDigital](http://ideo-digital.com) when developing for the __Android__ platform. 
 
-* [Project and code style guidelines](project_and_code_guidelines.md)
+* [Project and code style guidelines](project_and_code_style_guidelines.md)
 * [Project structure](project_structure.md)
 * [Architecture Guidelines](architecture_guidelines/android_architecture.md)
 
