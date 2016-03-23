@@ -29,6 +29,8 @@ The name is build from `prefix` `_` some meaning name `_` state where is relevan
 | Icon         | `ic_`	            | `ic_star.png`               |
 | Menu         | `menu_	`           | `menu_submenu_bg.9.png`     |
 | Notification | `notification_`	| `notification_bg.9.png`     |
+| Selector     | `selector_`       | `selector_<type_class>.xml` |
+| Shape        | `shape_`          | `shape_<type_class>.png`    |
 | Tabs         | `tab_`            | `tab_pressed.9.png`         |
 
 Naming conventions for icons (taken from [Android iconography guidelines](http://developer.android.com/design/style/iconography.html)):
@@ -588,7 +590,7 @@ Resource IDs and names are written in __lowercase_underscore__.
 
 #### 2.3.2.1 ID naming
 
-IDs should be prefixed with the name of the element in lowercase, followed by a short name of the "parent" and by the meaning name.The names shall be based on CamelCase. For example:
+IDs should be prefixed with the name of the element in lowercase, followed by a short name of the "parent" and by the meaning name.The names shall be based on CamelCase. For all kind of views the full name will be used except `LinearLayout` and `RelativeLayout` or another "layouts". For example:
 
 | Element            | Prefix            |
 | -----------------  | ----------------- |
@@ -597,6 +599,8 @@ IDs should be prefixed with the name of the element in lowercase, followed by a 
 | `Button`           | `button`          |
 | `Menu`             | `menu`            |
 | `EditText`         | `edit`            |
+| `LinearLayout`     | `lolin`           |
+| `RelativeLayout`   | `lorel`           |
 
 If we are in `activity_login.xml` 
 
