@@ -321,7 +321,7 @@ There is no single correct solution for this but using a __logical__ and __consi
 Example:
 
 ```java
-public class MainActivity extends Activity {
+public class ActivityMain extends Activity {
 
 	private String mTitle;
     private TextView mTextViewTitle;
@@ -349,7 +349,7 @@ public class MainActivity extends Activity {
 If your class is extending an __Android component__ such as an Activity or a Fragment, it is a good practice to order the override methods so that they __match the component's lifecycle__. For example, if you have an Activity that implements `onCreate()`, `onDestroy()`, `onPause()` and `onResume()`, then the correct order is:
 
 ```java
-public class MainActivity extends Activity {
+public class ActivityMain extends Activity {
 
 	//Order matches Activity lifecycle
     @Override
@@ -458,7 +458,7 @@ public static Intent getStartIntent(Context context, User user) {
 For Fragments it is named `newInstance()` and handles the creation of the Fragment with the right arguments:
 
 ```java
-public static UserFragment newInstance(User user) {
+public static FragmentUser newInstance(User user) {
 	UserFragment fragment = new UserFragment;
 	Bundle args = new Bundle();
 	args.putParcelable(ARGUMENT_USER, user);
